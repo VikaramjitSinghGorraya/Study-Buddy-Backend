@@ -3,7 +3,13 @@ import multer from "multer";
 import { handlePDFUpload } from "../controllers/pdfController";
 
 const router = express.Router();
-const upload = multer({ storage: multer.memoryStorage() });
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 100 * 1024 * 1024, // 100 MB limit
+  },
+});
 
 router.post("/upload", upload.single("file"), handlePDFUpload);
 
