@@ -1,11 +1,10 @@
-import { Router } from "express";
+import express from "express";
+import multer from "multer";
 import { handlePDFUpload } from "../controllers/pdfController";
-import { askQuestion } from "../controllers/askQuestion";
 
-const router = Router();
+const router = express.Router();
+const upload = multer({ storage: multer.memoryStorage() });
 
-router.post("/upload", handlePDFUpload);
-
-router.post("/ask", askQuestion);
+router.post("/upload", upload.single("file"), handlePDFUpload);
 
 export default router;
