@@ -23,7 +23,7 @@ export const handlePDFUpload = async (req: Request, res: Response) => {
     }
 
     // ✅ File size limit check (10 MB)
-    const maxSize = 100 * 1024 * 1024; // 10 MB
+    const maxSize = 10 * 1024 * 1024; // 10 MB
     if (req.file.size > maxSize) {
       res.status(413).json({ error: "File too large. Max 10 MB allowed." });
       return;
