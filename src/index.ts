@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
 import pdfRouter from "./routes/pdfRoutes";
+import askRouter from "./routes/askRoutes";
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use(
 
 app.use(express.json());
 app.use("/api", pdfRouter);
+app.use("/api/ask", askRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
