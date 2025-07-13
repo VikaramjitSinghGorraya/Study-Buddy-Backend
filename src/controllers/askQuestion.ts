@@ -8,8 +8,9 @@ const openai = new OpenAI({
 
 export const askQuestion = async (req: Request, res: Response) => {
   try {
-    const { question } = req.body;
-    if (!question) {
+    const { question, fileId } = req.body;
+
+    if (!question || !fileId) {
       res.status(400).json({ error: "Question and fileId are required" });
       return;
     }
@@ -27,6 +28,9 @@ export const askQuestion = async (req: Request, res: Response) => {
       topK: 5,
       vector: queryVector,
       includeMetadata: true,
+      filter: {
+        fileId: { $eq: fileId }, // ✅ This ensures only relevant PDF chunks are returned
+      },
     });
 
     const matchedChunks = searchResponse.matches

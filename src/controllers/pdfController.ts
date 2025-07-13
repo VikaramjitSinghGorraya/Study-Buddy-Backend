@@ -1,3 +1,4 @@
+// controllers/pdfController.ts
 import { Request, Response } from "express";
 import PdfParse from "pdf-parse";
 import OpenAI from "openai";
@@ -22,8 +23,7 @@ export const handlePDFUpload = async (req: Request, res: Response) => {
       return;
     }
 
-    // ✅ File size limit check (10 MB)
-    const maxSize = 10 * 1024 * 1024; // 10 MB
+    const maxSize = 10 * 1024 * 1024;
     if (req.file.size > maxSize) {
       res.status(413).json({ error: "File too large. Max 10 MB allowed." });
       return;
@@ -58,7 +58,7 @@ export const handlePDFUpload = async (req: Request, res: Response) => {
 
     await index.upsert(vectors);
 
-    res.json({ embeddings });
+    res.json({ embeddings, fileId });
   } catch (err) {
     console.error("Upload error:", err);
     res.status(500).json({ error: "Failed to process PDF" });
